@@ -29,17 +29,12 @@ func (n *SortedSlice) Add(d fixture.Item) {
 	}
 }
 
-func BenchmarkInsertIterate(b *testing.B) {
+func BenchmarkInsert(b *testing.B) {
 	var list *SortedSlice
 	for i := 0; i < b.N; i++ {
 		list = &SortedSlice{}
 		for i := 0; i < len(fixture.TestData); i++ {
 			list.Add(fixture.TestData[i])
-		}
-
-		for i := 0; i < len(*list); i++ {
-			_ = (*list)[i].Key
-			_ = (*list)[i].Value
 		}
 	}
 
@@ -68,6 +63,39 @@ func BenchmarkSortedInsert(b *testing.B) {
 		list = &SortedSlice{}
 		for i := 0; i < len(fixture.SortedTestData); i++ {
 			list.Add(fixture.SortedTestData[i])
+		}
+	}
+
+	// verify
+	b.StopTimer()
+	started := false
+	var seen fixture.Key
+	for i := 0; i < len(*list); i++ {
+		k := (*list)[i].Key
+		if started && seen >= k {
+			b.Errorf("Key wrong order: got %v but seen %v", k, seen)
+		}
+		seen = k
+		started = true
+		got := (*list)[i]
+		want := fixture.FinalTestData[k]
+		if got != want {
+			b.Errorf("Key wrong value: got %v want %v", got, want)
+		}
+	}
+}
+
+func BenchmarkIterate(b *testing.B) {
+	list := &SortedSlice{}
+	for i := 0; i < len(fixture.TestData); i++ {
+		list.Add(fixture.TestData[i])
+	}
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		for i := 0; i < len(*list); i++ {
+			_ = (*list)[i].Key
+			_ = (*list)[i].Value
 		}
 	}
 
