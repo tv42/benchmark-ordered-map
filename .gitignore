@@ -1,0 +1,7 @@
+/.redo/
+*.redo1.tmp
+*.redo2.tmp
+
+*.list
+*.workload
+*.pretty
