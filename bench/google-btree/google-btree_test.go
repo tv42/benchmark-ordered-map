@@ -13,7 +13,7 @@ func (a googItem) Less(b btree.Item) bool {
 	return a.Key < b.(googItem).Key
 }
 
-const btreeDegree = 2
+const btreeDegree = 32
 
 func BenchmarkInsert(b *testing.B) {
 	for i := 0; i < b.N; i++ {
