@@ -40,39 +40,39 @@ Inserts the test data, pre-sorted, in key order.
 # Insert
 benchmark                       iter       time/iter     bytes alloc             allocs
 ---------                       ----       ---------     -----------             ------
-Benchmark_cznic-b-codegen         50     44.08 ms/op    3211956 B/op     2133 allocs/op
-Benchmark_cznic-b                 20     87.78 ms/op    6045636 B/op   102194 allocs/op
-Benchmark_glennbrown-skiplist     20     98.92 ms/op   11582330 B/op   301299 allocs/op
-Benchmark_huandu-skiplist         10    153.61 ms/op    9462859 B/op   301053 allocs/op
-Benchmark_google-btree            10    154.11 ms/op   11692828 B/op   333167 allocs/op
-Benchmark_petar-GoLLRB            10    162.50 ms/op    8140944 B/op   200588 allocs/op
-Benchmark_ryszard-skiplist         5    277.18 ms/op   66141742 B/op   404862 allocs/op
-Benchmark_sortedslice              1   3800.25 ms/op   14598160 B/op       32 allocs/op
+Benchmark_cznic-b-codegen         30     49.52 ms/op    3195239 B/op     1924 allocs/op
+Benchmark_google-btree            20     70.37 ms/op    6775184 B/op   106916 allocs/op
+Benchmark_cznic-b                 20    100.70 ms/op    6824222 B/op   201926 allocs/op
+Benchmark_glennbrown-skiplist     10    107.12 ms/op   12016763 B/op   400018 allocs/op
+Benchmark_huandu-skiplist         10    158.35 ms/op    9908171 B/op   400003 allocs/op
+Benchmark_petar-GoLLRB            10    194.30 ms/op    8000016 B/op   200001 allocs/op
+Benchmark_ryszard-skiplist         5    267.60 ms/op   66400340 B/op   500006 allocs/op
+Benchmark_sortedslice              1   3937.34 ms/op   14598160 B/op       32 allocs/op
 
 
 # Iterate
 benchmark                        iter         time/iter   bytes alloc        allocs
 ---------                        ----         ---------   -----------        ------
-Benchmark_sortedslice           10000      206.62 μs/op        0 B/op   0 allocs/op
-Benchmark_cznic-b-codegen        2000     1318.74 μs/op        0 B/op   0 allocs/op
-Benchmark_cznic-b                 500     3686.69 μs/op        0 B/op   0 allocs/op
-Benchmark_huandu-skiplist         500     4663.82 μs/op        0 B/op   0 allocs/op
-Benchmark_glennbrown-skiplist     500     6121.29 μs/op        0 B/op   0 allocs/op
-Benchmark_google-btree            500     6969.98 μs/op        0 B/op   0 allocs/op
-Benchmark_petar-GoLLRB            100    10587.08 μs/op        0 B/op   0 allocs/op
-Benchmark_ryszard-skiplist        100    16117.89 μs/op       48 B/op   1 allocs/op
+Benchmark_sortedslice           10000      211.18 μs/op        0 B/op   0 allocs/op
+Benchmark_cznic-b-codegen        1000     1388.93 μs/op        0 B/op   0 allocs/op
+Benchmark_google-btree            500     2662.57 μs/op        0 B/op   0 allocs/op
+Benchmark_cznic-b                 500     3692.48 μs/op        0 B/op   0 allocs/op
+Benchmark_huandu-skiplist         300     4662.79 μs/op        0 B/op   0 allocs/op
+Benchmark_glennbrown-skiplist     200     6861.29 μs/op        0 B/op   0 allocs/op
+Benchmark_petar-GoLLRB            200     9948.53 μs/op        0 B/op   0 allocs/op
+Benchmark_ryszard-skiplist        100    16716.96 μs/op       48 B/op   1 allocs/op
 
 
 # SortedInsert
 benchmark                                iter      time/iter     bytes alloc             allocs
 ---------                                ----      ---------     -----------             ------
-Benchmark_sortedslice                     100    11.35 ms/op   14598160 B/op       32 allocs/op
-Benchmark_cznic-b-codegen                 100    22.24 ms/op    2695054 B/op     1790 allocs/op
-Benchmark_glennbrown-skiplist              50    55.44 ms/op   11600053 B/op   301358 allocs/op
-Benchmark_huandu-skiplist                  50    68.09 ms/op    9475684 B/op   301095 allocs/op
-Benchmark_cznic-b                          20    68.38 ms/op    5330160 B/op   101841 allocs/op
-Benchmark_petar-GoLLRB_InsertNoReplace     20   104.14 ms/op    8140968 B/op   200588 allocs/op
-Benchmark_petar-GoLLRB_ReplaceOrInsert     10   165.83 ms/op    8140992 B/op   200588 allocs/op
-Benchmark_google-btree_ReplaceOrInsert     10   179.43 ms/op   22216948 B/op   602078 allocs/op
-Benchmark_ryszard-skiplist                 10   183.79 ms/op   66152510 B/op   404975 allocs/op
+Benchmark_sortedslice                     100    15.61 ms/op   14598160 B/op       32 allocs/op
+Benchmark_cznic-b-codegen                  50    26.25 ms/op    2681010 B/op     1614 allocs/op
+Benchmark_google-btree_ReplaceOrInsert     30    51.30 ms/op    8385296 B/op   109902 allocs/op
+Benchmark_glennbrown-skiplist              20    63.32 ms/op   12016764 B/op   400018 allocs/op
+Benchmark_cznic-b                          20    68.31 ms/op    6112231 B/op   201616 allocs/op
+Benchmark_huandu-skiplist                  20    74.63 ms/op    9906620 B/op   400003 allocs/op
+Benchmark_petar-GoLLRB_InsertNoReplace     10   126.87 ms/op    8000016 B/op   200001 allocs/op
+Benchmark_ryszard-skiplist                 10   156.13 ms/op   66400353 B/op   500006 allocs/op
+Benchmark_petar-GoLLRB_ReplaceOrInsert     10   193.42 ms/op    8000016 B/op   200001 allocs/op
 ```
