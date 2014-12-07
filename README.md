@@ -36,8 +36,8 @@ Inserts the test data, pre-sorted, in key order.
 
 # Results
 
+## Insert
 ```
-# Insert
 benchmark                       iter       time/iter     bytes alloc             allocs
 ---------                       ----       ---------     -----------             ------
 Benchmark_cznic-b-codegen         30     49.59 ms/op    3195217 B/op     1923 allocs/op
@@ -49,9 +49,10 @@ Benchmark_huandu-skiplist         10    155.92 ms/op    9908171 B/op   400003 al
 Benchmark_petar-GoLLRB            10    187.61 ms/op    8000016 B/op   200001 allocs/op
 Benchmark_ryszard-skiplist         5    266.40 ms/op   66400347 B/op   500006 allocs/op
 Benchmark_sortedslice              1   3870.83 ms/op   14598160 B/op       32 allocs/op
+```
 
-
-# Iterate
+## Iterate
+```
 benchmark                        iter         time/iter   bytes alloc        allocs
 ---------                        ----         ---------   -----------        ------
 Benchmark_sortedslice           10000      210.75 μs/op        0 B/op   0 allocs/op
@@ -63,9 +64,10 @@ Benchmark_huandu-skiplist         300     4689.53 μs/op        0 B/op   0 alloc
 Benchmark_glennbrown-skiplist     200     6513.89 μs/op        0 B/op   0 allocs/op
 Benchmark_petar-GoLLRB            200     9491.05 μs/op        0 B/op   0 allocs/op
 Benchmark_ryszard-skiplist        100    16183.94 μs/op       48 B/op   1 allocs/op
+```
 
-
-# SortedInsert
+## SortedInsert
+```
 benchmark                                iter      time/iter     bytes alloc             allocs
 ---------                                ----      ---------     -----------             ------
 Benchmark_sortedslice                     100    15.31 ms/op   14598160 B/op       32 allocs/op
