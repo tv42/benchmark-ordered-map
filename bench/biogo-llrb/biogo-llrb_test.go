@@ -3,7 +3,7 @@ package biogollrb_test
 import (
 	"testing"
 
-	"code.google.com/p/biogo.store/llrb"
+	"github.com/biogo/store/llrb"
 	"github.com/tv42/benchmark-ordered-map/fixture"
 )
 
