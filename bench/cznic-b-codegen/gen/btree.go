@@ -1,59 +1,7 @@
-// Copyright 2014 The Go Authors. All rights reserved.
+// Copyright 2014 The b Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// Package b implements a B+tree.
-//
-// Changelog
-//
-// 2014-06-26: Lower GC presure by recycling things.
-//
-// 2014-04-18: Added new method Put.
-//
-// Generic types
-//
-// Keys and their associated values are interface{} typed, similar to all of
-// the containers in the standard library.
-//
-// Semiautomatic production of a type specific variant of this package is
-// supported via
-//
-//	$ make generic
-//
-// This command will write to stdout a version of the btree.go file where
-// every key type occurrence is replaced by the word 'key' (written in all
-// CAPS) and every value type occurrence is replaced by the word 'value'
-// (written in all CAPS). Then you have to replace these tokens with your
-// desired type(s), using any technique you're comfortable with.
-//
-// This is how, for example, 'example/int.go' was created:
-//
-//	$ mkdir example
-//	$
-//	$ # Note: the command bellow must be actually written using the words
-//	$ # 'key' and 'value' in all CAPS. The proper form is avoided in this
-//	$ # documentation to not confuse any text replacement mechanism.
-//	$
-//	$ make generic | sed -e 's/key/int/g' -e 's/value/int/g' > example/int.go
-//
-// No other changes to int.go are necessary, it compiles just fine.
-//
-// Running the benchmarks for 1000 keys on a machine with Intel i5-4670 CPU @
-// 3.4GHz, Go release 1.3.
-//
-//	$ go test -bench 1e3 example/all_test.go example/int.go
-//	PASS
-//	BenchmarkSetSeq1e3	   10000	    146740 ns/op
-//	BenchmarkGetSeq1e3	   10000	    108261 ns/op
-//	BenchmarkSetRnd1e3	   10000	    254359 ns/op
-//	BenchmarkGetRnd1e3	   10000	    134621 ns/op
-//	BenchmarkDelRnd1e3	   10000	    211864 ns/op
-//	BenchmarkSeekSeq1e3	   10000	    148628 ns/op
-//	BenchmarkSeekRnd1e3	   10000	    215166 ns/op
-//	BenchmarkNext1e3	  200000	      9211 ns/op
-//	BenchmarkPrev1e3	  200000	      8843 ns/op
-//	ok  	command-line-arguments	25.071s
-//	$
 package b
 
 import bench "github.com/tv42/benchmark-ordered-map/fixture"
@@ -287,17 +235,18 @@ func (t *Tree) cat(p *x, q, r *d, pi int) {
 	if p.c > 1 {
 		p.extract(pi)
 		p.x[pi].ch = q
-	} else {
-		switch x := t.r.(type) {
-		case *x:
-			*x = zx
-			btXPool.Put(x)
-		case *d:
-			*x = zd
-			btDPool.Put(x)
-		}
-		t.r = q
+		return
 	}
+
+	switch x := t.r.(type) {
+	case *x:
+		*x = zx
+		btXPool.Put(x)
+	case *d:
+		*x = zd
+		btDPool.Put(x)
+	}
+	t.r = q
 }
 
 func (t *Tree) catX(p, q, r *x, pi int) {
@@ -515,10 +464,11 @@ func (t *Tree) overflow(p *x, q *d, pi, i int, k bench.Key, v bench.Value) {
 			q.mvR(r, 1)
 			t.insert(q, i, k, v)
 			p.x[pi].k = r.d[0].k
-		} else {
-			t.insert(r, 0, k, v)
-			p.x[pi].k = k
+			return
 		}
+
+		t.insert(r, 0, k, v)
+		p.x[pi].k = k
 		return
 	}
 
@@ -639,9 +589,9 @@ func (t *Tree) Set(k bench.Key, v bench.Value) {
 // (whatever, false) if it decides not to create or not to update the value of
 // the KV pair.
 //
-// 	tree.Set(k, v) conceptually equals
+// 	tree.Set(k, v) call conceptually equals calling
 //
-// 	tree.Put(k, func(k, v []byte){ return v, true }([]byte, bool))
+// 	tree.Put(k, func(bench.Key, bool){ return v, true })
 //
 // modulo the differing return values.
 func (t *Tree) Put(k bench.Key, upd func(oldV bench.Value, exists bool) (newV bench.Value, write bool)) (oldV bench.Value, written bool) {
@@ -792,15 +742,22 @@ func (t *Tree) underflow(p *x, q *d, pi int) {
 	if l != nil && l.c+q.c >= 2*kd {
 		l.mvR(q, 1)
 		p.x[pi-1].k = q.d[0].k
-	} else if r != nil && q.c+r.c >= 2*kd {
+		return
+	}
+
+	if r != nil && q.c+r.c >= 2*kd {
 		q.mvL(r, 1)
 		p.x[pi].k = r.d[0].k
 		r.d[r.c] = zde // GC
-	} else if l != nil {
-		t.cat(p, l, q, pi-1)
-	} else {
-		t.cat(p, q, r, pi)
+		return
 	}
+
+	if l != nil {
+		t.cat(p, l, q, pi-1)
+		return
+	}
+
+	t.cat(p, q, r, pi)
 }
 
 func (t *Tree) underflowX(p *x, q *x, pi int, i int) (*x, int) {
