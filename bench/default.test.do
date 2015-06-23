@@ -1,3 +1,5 @@
+exec 1>&2
+
 # handling Go dependencies is too hard, screw it, let "go test -c" run
 # every time
 redo-always
