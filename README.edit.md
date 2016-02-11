@@ -1,5 +1,13 @@
 # Ordered map Go data structure benchmarks
 
+## How to run
+
+On OSX you'll need gfind, `brew install findutils`, and it in the path as `find`.
+
+`prettybench` in the PATH, `go get github.com/cespare/prettybench`
+
+Run benchmarks with `redo` in the root folder. `redo` can be executed in place in a checkout of `https://github.com/apenwarr/redo`.
+
 ## Workloads
 
 ### Insert
