@@ -1,5 +1,8 @@
 # Ordered map Go data structure benchmarks
 
+These results are stale.
+Please see https://gitlab.com/cznic/benchmark-ordered-map for an updated version.
+
 ## Workloads
 
 ### Insert
